@@ -38,7 +38,4 @@ class ArticlesListView extends \core\View
         return ob_get_clean();
     }
 
-
-
-
 }
