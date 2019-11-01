@@ -1,0 +1,72 @@
+<div class='row border-bottom pt-5'>    <!--все 5 статей на странице-->
+    <div class="col">
+
+        <?php if (!$toView['countArticles'])  { ?>
+            Нет статей для показа.
+        <?php } else { ?>
+
+            <!-- цикл по статьям -->
+            <?php foreach ($toView['Articles'] as $arrArticle) { ?>
+
+            <div class='row pt-3'>  <!--одна статья c-->
+                <div class="col">
+
+
+                    <div class='row'>
+                        <div class='col'>
+                            <h2><?= $arrArticle['title'] ?></h2>
+                        </div>
+                    </div>
+
+                    <div class='row pt-3'>
+                        <div class='col'>
+                            <?= $arrArticle['mainText'] ?>
+                        </div>
+                    </div>
+
+                    <div class='row pt-4 pb-5'>
+                        <div class='col-6 col-md-4 col-lg-3 offset-3 offset-md-1'>
+                            <button type='button' id='id-button-see-full' class='btn btn-block btn-outline-info'>Смотреть полностью</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <?php } ?>
+        <?php } ?>
+
+
+    </div>
+</div>
+
+
+<!-- выводим пагинацию для 2х и более страниц -->
+<?php
+
+
+    if ($isPagination) { ?>
+
+    <div class='row border-bottom pt-3'>
+        <div class="col">
+
+            <div class='row form-group'>
+                <nav class="col">
+                    <ul class="pagination justify-content-center mb-0">
+                        <li class="page-item <?= ($itemFirstDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newpage='1'">&#60;&#60;</div></li>
+                        <li class="page-item <?= ($itemFirstDisabled)?'disabled':'' ?>" ><div class="page-link js-pagination" data-newpage='<?= $pageNumber-1 ?>'">&#60;</div></li>
+
+                        <?php for ($page = $minShowPageNum; $page <= $maxShowPageNum; $page++) { ?>
+                            <li class="page-item  <?= ($pageNumber == $page)?'active':'' ?>" ><div class="page-link js-pagination" data-newpage='<?=$page?>'><?=$page?></div></li>
+                        <?php } ?>
+
+
+                        <li class="page-item <?= ($itemLastDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newpage='<?= $pageNumber+1 ?>'>&#62;</div></li>
+                        <li class="page-item <?= ($itemLastDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newpage='<?= $pagesCount ?>'>&#62;&#62;</div></li>
+                    </ul>
+
+                </nav>
+            </div>
+
+        </div>
+    </div>
+<?php } ?>
