@@ -13,8 +13,8 @@ class Controller
 
     protected $html;
 
-    protected $arrPostRequest;  //запрос
-    protected $arrPostAnswer;   //ответ на post запрос браузера
+    protected $arrPostRequest=[];  //запрос
+    protected $arrPostAnswer=[];   //ответ на post запрос браузера
 
 
     protected $data2View=[];    //массив данных для передачи во view.
@@ -22,7 +22,9 @@ class Controller
 
 
 
-
+    /**
+     *
+     */
     public function runModelView($classModel,$funcModel=null,$paramsModel=null,$classView=null,$funcView=null,$paramsView=null)
     {
         $funcModel  = ($funcModel) ?? 'getData';
@@ -30,19 +32,19 @@ class Controller
 
         $classModelName = "\\models\\$classModel";
         $this->model = new $classModelName();
-        $toView = $this->model->$funcModel($paramsModel);
-        //$toView = array_merge($toView,$this->data2View);
+        $this->data2View = $this->model->$funcModel($paramsModel);
 
 
         $classViewName = "\\views\\$classView";
         $this->view = new $classViewName();
 
-        return $this->view->$funcView($paramsView,$toView);
+        return $this->view->$funcView($paramsView,$this->data2View);
     }
 
 
-
-
+    /**
+     *
+     */
     protected function getDataFromPostRequest()
     {
         if (!isset($_POST['jsonPostRequest'])) throw new Error();
@@ -51,6 +53,9 @@ class Controller
 
     }
 
+    /**
+     *
+     */
     protected function sendPostAnswer($errorMessage = 'OK')
     {
         $this->arrPostAnswer['errorMessage']		= $errorMessage;
@@ -88,7 +93,7 @@ class Controller
         return (int)$this->arrPostRequest[$paramName];
     }
 
-    protected function getPostString($paramName,$maxLen = MAX_STRLEN)
+/*    protected function getPostString($paramName,$maxLen = MAX_STRLEN)
     {
         //проверка на корректность
         if (!isset($this->arrPostRequest[$paramName]) ) throw new Error('post_error');
@@ -97,29 +102,8 @@ class Controller
         if ($len <1 || $len > $maxLen)  throw new Error('post_error');
 
         return (string)$this->arrPostRequest[$paramName];
-    }
-
-    /*    public function runPostRequest($classModel,$modelParams)
-        {
-            $this->model = new $classModel($modelParams);
-
-            $this->arrPostAnswer = $this->model->getAll();
-
-            echo json_encode($this->arrPostAnswer);
-        }*/
-
-/*    protected function getPostDatetime($paramName)
-    {
-        //проверка на корректность
-        if (!isset($_POST[$paramName]) ) throw new Exception('post_error');
-
-        if (strlen($_POST[$paramName]) != 19) throw new Exception('post_error');
-
-        //проверка регуляркой
-        if (!preg_match('#^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$#',$_POST[$paramName])) throw new Exception('post_error');
-
-        return (string)$_POST[$paramName];
     }*/
+
 
 
 }

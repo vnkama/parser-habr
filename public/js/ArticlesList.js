@@ -10,17 +10,13 @@ var pageNumber=1
  */
 function pageReady()
 {
-    setPaginationOnclicks();
+    setPaginationReload();
 }
 
-function setPaginationOnclicks()
+function setPaginationReload()
 {
-    let elems = document.getElementsByClassName('js-pagination');       //
-    let len=elems.length;
-    for (let i=0;i<len;i++) {
-        elems[i].onclick = pagination_onclick;
-    }
-
+    _setOnclickByClass('js-pagination',pagination_onclick);
+    _setOnclickByClass('js-button-see-full',buttonSeeFull_onclick);
 }
 
 
@@ -30,23 +26,57 @@ function setPaginationOnclicks()
 //
 function pagination_onclick()
 {
-    alert('pagination_onclick'+this.getAttribute('data-newtab'));
-
     let arrPostRequest = {
         operation:  'getTab',
         tabNumber:  this.getAttribute('data-newtab')
     }
 
-    g_sendPostRequest('index',arrPostRequest,postRequest_getTab_OK);
-
+    _sendPostRequest('index',arrPostRequest,postRequest_getTab_OK);
 }
+
 
 function postRequest_getTab_OK(arrPostAnswer)
 {
     document.getElementById('id-tab').innerHTML = arrPostAnswer['newTab'];
 
     //заново настроим обработчики кликов
-    setPaginationOnclicks();
+    setPaginationReload();
+}
+
+
+function buttonSeeFull_onclick()
+{
+    let arrPostRequest = {
+        operation:  'getArticle',
+        idArticle:  this.getAttribute('data-id-article')
+    }
+
+    _sendPostRequest('index',arrPostRequest,postRequest_getArticle_OK);
+}
+
+
+function postRequest_getArticle_OK(arrPostAnswer)
+{
+    //arrPostAnswer['Article']['mainText'];
+    //$.fancybox.open(arrPostAnswer['Article']['mainText']);
+
+    document.getElementById('id-modal-article').innerHTML = '<h2>' + arrPostAnswer['Article']['title'] + '</h2><br>' + arrPostAnswer['Article']['mainText'];
+
+        $.fancybox.open({
+        src  : '#id-modal-article',
+        type : 'inline',
+        opts : {
+            modal: false,
+            buttons: [
+                "close"
+            ],
+            fullScreen: {
+                autoStart: true,
+                requestOnStart : true
+            },
+        }
+    });
+
 }
 
 
@@ -67,7 +97,6 @@ function showFullArticel_onclick()
 function showFancy4Articel(fullText)
 {
     alert('showFancy4Articel');
-
 }
 
 

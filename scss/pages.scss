@@ -70,37 +70,10 @@ $borderlight: #b6c6d2;
     margin-bottom: 0;
 }
 
-
-
-/*страница логин*/
-.p02 {
-    .header {
-        padding: 15px 0 15px 0;
-        border-bottom: 1px solid $borderlight;
-        margin-bottom: 0;
-    }
-
-
-    .login {
-        margin-top: 5rem;
-        /*padding-bottom: 0.3rem;*/
-        border: 1px solid  $borderlight;
-
-        .login-header {
-            padding: 1rem 0 1rem 0;
-            border-bottom: 1px solid $borderlight;;
-            margin-bottom: 1.5rem;
-        }
-
-        .login-message,.password-message {
-            font-size: 0.75rem;
-            font-style: italic;
-            height: 1rem;
-        }
-
-    }
+#id-modal-article {
+    width: 100%;
+    min-height: 100vh;
 }
-
 
 /*страница ошибка 404*/
 .p03 {

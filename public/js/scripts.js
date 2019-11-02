@@ -11,7 +11,7 @@ function ready()
     }
 }
 
-function g_sendPostRequest(routeName,arrPostRequest,funcResult)
+function _sendPostRequest(routeName,arrPostRequest,funcResult)
 {
     let arrPostAnswer;
     let xhr = new XMLHttpRequest();
@@ -49,6 +49,17 @@ function g_sendPostRequest(routeName,arrPostRequest,funcResult)
     xhr.send("routeName="+routeName+"&jsonPostRequest=" + JSON.stringify(arrPostRequest));
 
 }
+
+function _setOnclickByClass(className,func)
+{
+    let elems = document.getElementsByClassName(className);
+    let len=elems.length;
+    for (let i=0;i<len;i++) {
+        elems[i].onclick = func;
+    }
+
+}
+
 
 
 function unixtime2str(xTime)

@@ -22,7 +22,6 @@ class ArticlesController extends \core\Controller
             'createHtml_TotalPage',
             ['tabNumber' => $tabNumber]);
 
-
         echo $html;
     }
 
@@ -55,6 +54,9 @@ class ArticlesController extends \core\Controller
         $this->sendPostAnswer();
     }
 
+    /**
+     *
+     */
     private function handleGetTab()
     {
         $tabNumber = $this->getPostInt('tabNumber');
@@ -68,13 +70,19 @@ class ArticlesController extends \core\Controller
                                             'createHtml_Tab',
                                             ['tabNumber' => $tabNumber]
                                         );
+
+
     }
 
 
+    /**
+     *
+     */
     private function handleGetArticle()
     {
-        $idArticle = $this->getPostInt('idArticle');
-
+        $model = new \models\ArticlesModel();
+        $arr = $model->getArticle(['idArticle' => $this->getPostInt('idArticle')]);
+        $this->arrPostAnswer = array_merge($this->arrPostAnswer,$arr);
     }
 
 
@@ -82,5 +90,4 @@ class ArticlesController extends \core\Controller
     {
 
     }
-
 }

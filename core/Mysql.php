@@ -108,12 +108,12 @@ class Mysql
         $this->testString($q);
 
         $mysql_result=mysqli_query($this->dblink, $q);
-        if (!$mysql_result)  throw new Error();
+        if (!$mysql_result)  throw new Error($q);
         $arrRes=null;
 
         if (mysqli_num_rows($mysql_result) == 1) {
             $arrRow = mysqli_fetch_assoc($mysql_result);	//$arrRow 1-мерный массив
-            if (!$arrRow || !count($arrRow))  throw new Error();
+            if (!$arrRow || !count($arrRow))  throw new Error($q);
         }
         else {
             //в функции может быть в ответе только
