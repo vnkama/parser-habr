@@ -41,10 +41,7 @@
 
 
 <!-- выводим пагинацию для 2х и более страниц -->
-<?php
-
-
-    if ($isPagination) { ?>
+<?php if ($isPagination) { ?>
 
     <div class='row border-bottom pt-3'>
         <div class="col">
@@ -52,16 +49,15 @@
             <div class='row form-group'>
                 <nav class="col">
                     <ul class="pagination justify-content-center mb-0">
-                        <li class="page-item <?= ($itemFirstDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newpage='1'">&#60;&#60;</div></li>
-                        <li class="page-item <?= ($itemFirstDisabled)?'disabled':'' ?>" ><div class="page-link js-pagination" data-newpage='<?= $pageNumber-1 ?>'">&#60;</div></li>
+                        <li class="page-item <?= ($itemFirstDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newtab='1'>&#60;&#60;</div></li>
+                        <li class="page-item <?= ($itemFirstDisabled)?'disabled':'' ?>" ><div class="page-link js-pagination" data-newtab='<?= $tabNumber-1 ?>'">&#60;</div></li>
 
-                        <?php for ($page = $minShowPageNum; $page <= $maxShowPageNum; $page++) { ?>
-                            <li class="page-item  <?= ($pageNumber == $page)?'active':'' ?>" ><div class="page-link js-pagination" data-newpage='<?=$page?>'><?=$page?></div></li>
+                        <?php for ($tab = $minShowTabNum; $tab <= $maxShowTabNum; $tab++) { ?>
+                            <li class="page-item  <?= ($tabNumber == $tab)?'active':'' ?>" ><div class="page-link js-pagination" data-newtab='<?=$tab?>'><?=$tab?></div></li>
                         <?php } ?>
 
-
-                        <li class="page-item <?= ($itemLastDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newpage='<?= $pageNumber+1 ?>'>&#62;</div></li>
-                        <li class="page-item <?= ($itemLastDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newpage='<?= $pagesCount ?>'>&#62;&#62;</div></li>
+                        <li class="page-item <?= ($itemLastDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newtab='<?= $tabNumber+1 ?>'>&#62;</div></li>
+                        <li class="page-item <?= ($itemLastDisabled)?'disabled':'' ?>"><div class="page-link js-pagination" data-newtab='<?= $tabsCount ?>'>&#62;&#62;</div></li>
                     </ul>
 
                 </nav>

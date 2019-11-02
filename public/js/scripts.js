@@ -11,6 +11,46 @@ function ready()
     }
 }
 
+function g_sendPostRequest(routeName,arrPostRequest,funcResult)
+{
+    let arrPostAnswer;
+    let xhr = new XMLHttpRequest();
+    xhr.open('post','index.php');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function()
+    {
+        if (this.readyState == 4){
+            if (this.status != 200){
+                alert('Ошибка связи. http status:' + this.status);
+                return;
+            }
+
+            try {
+                arrPostAnswer = JSON.parse(xhr.responseText);
+            } catch (ex) {
+                alert('Ошибка связи.JSON.parse xhr.responseText error');
+                return;
+            }
+
+            if (!('errorMessage' in arrPostAnswer)) {
+                alert('Ошибка связи. Нет поля errorMessage');
+                return;
+            }
+
+            if (arrPostAnswer['errorMessage'] != 'OK'){
+                alert('errorMessage:\r\n' + arrPostAnswer['errorMessage']);
+                return;
+            }
+
+            //ответ
+            funcResult(arrPostAnswer);
+        }
+    }
+    xhr.send("routeName="+routeName+"&jsonPostRequest=" + JSON.stringify(arrPostRequest));
+
+}
+
+
 function unixtime2str(xTime)
 {
     if (!xTime) return 'н/д';

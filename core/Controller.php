@@ -11,6 +11,8 @@ class Controller
     protected $model;
     protected $view;
 
+    protected $html;
+
     protected $arrPostRequest;  //запрос
     protected $arrPostAnswer;   //ответ на post запрос браузера
 
@@ -18,47 +20,7 @@ class Controller
     protected $data2View=[];    //массив данных для передачи во view.
 
 
-    protected $isAdmin;
 
-
-
-    /**
-     * Самый простейшйи обрабочтик запроса, просто полностью показывает статический файл
-     * никаких шаблонов, никаких парметров !!
-     *
-     * можно прямо из routes.php вызывать
-     *
-     * @param $htmlFile
-     */
-/*    public function routeHtml($htmlFile)
-    {
-        require_once ($htmlFile);
-    }*/
-
-
-
-    /**
-     *
-     * @param $params
-     */
-/*    public function routeView($toView)
-    {
-        require_once ($toView['templateFile']);
-    }*/
-
-
-    /**
-     * Обрабочтки запроса.
-     *
-     * Модель не используем, показываем view с параметрами
-     *
-     * @param $viewFile
-     */
-/*    public function runView($viewFile='template.html',$toView=[])
-    {
-        $toView = $this->data2View;
-        require_once ($viewFile);
-    }*/
 
 
     public function runModelView($classModel,$funcModel=null,$paramsModel=null,$classView=null,$funcView=null,$paramsView=null)
@@ -69,24 +31,16 @@ class Controller
         $classModelName = "\\models\\$classModel";
         $this->model = new $classModelName();
         $toView = $this->model->$funcModel($paramsModel);
-        $toView = array_merge($toView,$this->data2View);
+        //$toView = array_merge($toView,$this->data2View);
 
 
         $classViewName = "\\views\\$classView";
         $this->view = new $classViewName();
 
-        echo $this->view->$funcView($paramsView,$toView);
+        return $this->view->$funcView($paramsView,$toView);
     }
 
 
-    public function runPostRequest($classModel,$modelParams)
-    {
-        $this->model = new $classModel($modelParams);
-
-        $this->arrPostAnswer = $this->model->getAll();
-
-        echo json_encode($this->arrPostAnswer);
-    }
 
 
     protected function getDataFromPostRequest()
@@ -94,11 +48,12 @@ class Controller
         if (!isset($_POST['jsonPostRequest'])) throw new Error();
 
         $this->arrPostRequest = json_decode($_POST['jsonPostRequest'],true);
+
     }
 
-    protected function sendPostAnswer()
+    protected function sendPostAnswer($errorMessage = 'OK')
     {
-        $this->arrPostAnswer['errorMessage']		= 'OK';
+        $this->arrPostAnswer['errorMessage']		= $errorMessage;
         echo json_encode($this->arrPostAnswer);		//вывод массива результата
     }
 
@@ -144,6 +99,15 @@ class Controller
         return (string)$this->arrPostRequest[$paramName];
     }
 
+    /*    public function runPostRequest($classModel,$modelParams)
+        {
+            $this->model = new $classModel($modelParams);
+
+            $this->arrPostAnswer = $this->model->getAll();
+
+            echo json_encode($this->arrPostAnswer);
+        }*/
+
 /*    protected function getPostDatetime($paramName)
     {
         //проверка на корректность
@@ -157,23 +121,5 @@ class Controller
         return (string)$_POST[$paramName];
     }*/
 
-/*    public function runM($bundleName)
-    {
-        $bundleName = 'App\Bundles\\'.$bundleName;
-        $this->Bundle = new $bundleName();
-        $arrBundleData = $this->Bundle->getAll(); //дянные из модели
 
-        return $arrBundleData;
-    }
-
-    public function runMV($bundleName,$viewName,array $paramsBundle=null)
-    {
-        $bundleName = 'App\Bundles\\'.$bundleName;
-
-        $this->Bundle = new $bundleName($paramsBundle);
-
-        $arrBlade = $this->Bundle->getAll();    //данные из модели
-
-        return view($viewName,$arrBlade);
-    }*/
 }

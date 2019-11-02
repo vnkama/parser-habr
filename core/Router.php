@@ -147,16 +147,13 @@ class Router
     {
         $routeName = null;
 
-        if ($_SERVER['REQUEST_URI'] !== '/start.php') throw new Error($_SERVER['REQUEST_URI']);
+        if ($_SERVER['REQUEST_URI'] !== '/index.php') throw new Error($_SERVER['REQUEST_URI']);
 
-        if (!isset($_POST['url'])) throw new Error();
+        if (!isset($_POST['routeName'])) throw new Error();
 
-        $len = strlen($_POST['url']);
+        $len = strlen($_POST['routeName']);
         if ($len < 2 || $len > MAX_STRLEN) throw new Error();
 
-        return $_POST['url'];
+        return $_POST['routeName'];
     }
-
-
-
 }

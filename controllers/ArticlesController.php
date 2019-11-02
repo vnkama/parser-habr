@@ -8,19 +8,22 @@ class ArticlesController extends \core\Controller
 
     public function routeGET()
     {
-        $pageNumber = 1;    //начнем с первой страницы
+        $tabNumber = 1;    //начнем с первой страницы
 
-        $this->data2View['pageNumber'] = $pageNumber;
+        $this->data2View['tabNumber'] = $tabNumber;
 
 
-        $this->runModelView(
+        $html = $this->runModelView(
             'ArticlesModel',
             null,
-            ['pageNumber' => $pageNumber],
+            ['tabNumber' => $tabNumber],
 
             'ArticlesListView',
             'createHtml_TotalPage',
-            null);
+            ['tabNumber' => $tabNumber]);
+
+
+        echo $html;
     }
 
     public function routePOST()
@@ -31,12 +34,12 @@ class ArticlesController extends \core\Controller
 
 
         switch ($this->getPostOperation()) {
-            case 'requestPreviews':
-                $this->handleRequestPreviews();
+            case 'getTab':
+                $this->handleGetTab();
                 break;
 
-            case 'requestArticle':
-                $this->handleRequestArticle();
+            case 'getArticle':
+                $this->handleGetArticle();
                 break;
 
             case 'startParsing':
@@ -52,24 +55,25 @@ class ArticlesController extends \core\Controller
         $this->sendPostAnswer();
     }
 
-    private function handleRequestPreviews()
+    private function handleGetTab()
     {
-        $pageNumber = $this->getPostInt('pageNumber');
+        $tabNumber = $this->getPostInt('tabNumber');
 
-        $this->runModelView(
-            'ArticlesModel',
-            null,
-            ['pageNumber' => $pageNumber],
+        $this->arrPostAnswer['newTab'] = $this->runModelView(
+                                            'ArticlesModel',
+                                            null,
+                                            ['tabNumber' => $tabNumber],
 
-            'ArticlesListView',
-            'createHtml_Previews',
-            null);
-
+                                            'ArticlesListView',
+                                            'createHtml_Tab',
+                                            ['tabNumber' => $tabNumber]
+                                        );
     }
 
 
-    private function handleRequestArticle()
+    private function handleGetArticle()
     {
+        $idArticle = $this->getPostInt('idArticle');
 
     }
 
