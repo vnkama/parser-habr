@@ -88,6 +88,8 @@ class ArticlesController extends \core\Controller
 
     private function handleStartParsing()
     {
-
+        $model = new \models\ArticlesModel();
+        $model->parsing(['startingUrl' => $this->getPostString('startingUrl')]);
+        $this->arrPostAnswer = array_merge($this->arrPostAnswer,[]);
     }
 }

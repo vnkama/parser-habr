@@ -23,12 +23,17 @@ class Router
     {
 
 
-        //кодировка. задается втч для корректной работы регулярок на русском
+        //кодировка. задается для корректной работы регулярок на русском
         mb_regex_encoding(UTF8);
+
+        setlocale(LC_ALL, 'Russian_Russia.65001');
+
 
         date_default_timezone_set('Europe/Moscow');
 
         $this->arrRoutes        = require('../config/routes.php');
+
+
 
     }
 

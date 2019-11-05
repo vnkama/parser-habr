@@ -62,9 +62,9 @@ class Mysql
      */
     public function insert($q)
     {
-        $this->testString($q);
+        //$this->testString($q);
 
-        if (!mysqli_query($this->dblink, $q)) throw new Error();
+        if (!mysqli_query($this->dblink, $q)) throw new Error($q);
     }
 
 

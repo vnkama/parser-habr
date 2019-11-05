@@ -13,19 +13,18 @@
 
                     <div class='row'>
                         <div class='col'>
-                            <h2><a href='https://habr.com<?= $arrArticle['url'] ?>'><?= $arrArticle['title'] ?></a></h2>
+                            <h2><a href='https://habr.com<?= $arrArticle["url"] ?>'><?= $arrArticle['title'] ?></a></h2>
                         </div>
                     </div>
 
                     <div class='row pt-3'>
                         <div class='col'>
-                            <?= $arrArticle['mainText'] ?>
+                            <?= $arrArticle['previewText'] ?>
                         </div>
                     </div>
 
                     <div class='row pt-4 pb-5'>
                         <div class='col-6 col-md-4 col-lg-3 offset-3 offset-md-1'>
-                            <!--<a data-fancybox data-src='#modal' href="javascript:;"></a>-->
                             <button type='button' class='btn btn-block btn-outline-info js-button-see-full' data-id-article='<?= $arrArticle["idArticle"] ?>'>Полный текст</button>
                         </div>
                     </div>

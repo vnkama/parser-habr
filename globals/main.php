@@ -69,17 +69,14 @@
         log_initLog();
 
         $router = null;     // объявлем до try {, иначе обработчик ошибко не видет $router
+        logout("hello main friend -привет как твои дела");
+        logout(mb_detect_encoding("привет как твои дела"));
 
         try {
 
             //инициируем базу данных - глобальный объект
             global $global_Mysql;
             $global_Mysql = new \core\Mysql(require '../config/MysqlConfig.php');
-
-//            echo 'zzss1';
-//            $global_Mysql->select("select idArticle,title,left(mainText,200) from Articles where 1");
-//            echo 'zzss2';
-
 
             // создаем и заупскаем роутер
             $router = new \core\Router();

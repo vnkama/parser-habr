@@ -93,16 +93,16 @@ class Controller
         return (int)$this->arrPostRequest[$paramName];
     }
 
-/*    protected function getPostString($paramName,$maxLen = MAX_STRLEN)
+    protected function getPostString($paramName,$maxLen = MAX_STRLEN)
     {
         //проверка на корректность
-        if (!isset($this->arrPostRequest[$paramName]) ) throw new Error('post_error');
+        if (!isset($this->arrPostRequest[$paramName]) ) throw new Error($paramName);
 
         $len = strlen($this->arrPostRequest[$paramName]);
         if ($len <1 || $len > $maxLen)  throw new Error('post_error');
 
         return (string)$this->arrPostRequest[$paramName];
-    }*/
+    }
 
 
 

@@ -9,6 +9,11 @@ create table Articles (
 alter table Articles change idArticles idArticle int unsigned not null auto_increment;
 alter table Articles change title title varchar(255) not null;
 
+#добавим колонку превью
+alter table Articles add previewText varchar(255) not null;
+update Articles set previewText = left(mainText,200) where 1;
+
+
 
 
 
