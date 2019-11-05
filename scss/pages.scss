@@ -5,7 +5,9 @@
 
 $borderlight: #b6c6d2;
 
+/*основная старница сайта*/
 .page01 {
+
 
     .row-select-theme {
         padding-top: 1rem;
@@ -19,13 +21,13 @@ $borderlight: #b6c6d2;
     }
 
 
-    .comment {
+/*    .comment {
         padding: 16px 0 30px 0;
         border-bottom: 1px solid $borderlight;
 
         .header-user {
             font-size: 0.9rem;
-            /*font-weight: bold;*/
+            !*font-weight: bold;*!
         }
 
         .name {
@@ -37,7 +39,7 @@ $borderlight: #b6c6d2;
         }
 
         .header-admin {
-            /*@extend .text-md-right;*/
+            !*@extend .text-md-right;*!
         }
 
         .row-text {
@@ -58,29 +60,59 @@ $borderlight: #b6c6d2;
 
     .add-comment {
         padding: 16px 0 30px 0;
-        /*
-        border-bottom: 1px solid $borderlight;
-        margin-bottom: 10px;
-        */
+
+    }*/
+
+}
+
+
+
+/*для модального окна*/
+#id-modal-article {
+
+    width: 100%;
+    min-height: 100vh;
+
+    .column {
+        max-width: 780px;
     }
 
-    .post__text-html blockquote {
+    blockquote {
         display: block;
         margin: 12px 0;
         padding: 18px 20px;
         background: #fff7d7;
     }
-}
-.header {
-    padding: 15px 0 15px 0;
-    border-bottom: 1px solid $borderlight;
-    margin-bottom: 0;
+
+    img {
+        margin: 0;
+        vertical-align: middle;
+        max-width: 100%;
+        height: auto;
+    }
+
+    pre {
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
+        margin: 0;
+        padding: 0;
+        word-break: break-all;
+        font-family: monospace,monospace;
+        font-size: 1em;
+        white-space: pre;
+    }
+
+    code {
+        white-space: pre-wrap;
+        display: block;
+        padding: 17px 20px 20px;
+        border: 1px solid #e5e8ec;
+        background: #fbfdff;
+    }
 }
 
-#id-modal-article {
-    width: 100%;
-    min-height: 100vh;
-}
+
 
 /*страница ошибка 404*/
 .p03 {
@@ -89,13 +121,5 @@ $borderlight: #b6c6d2;
         border-bottom: 1px solid $borderlight;
         margin-bottom: 0;
     }
-
 }
-
-.p01 {
-
-}
-
-
-
 

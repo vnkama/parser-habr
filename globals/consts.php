@@ -5,5 +5,5 @@
 
     const DIVBOTH 	    = "<div style='clear:both'></div>";
     const UTF8			= 'UTF-8';
-    const MAX_STRLEN    = 0xFF;     //проверки стринг на длинну
+    const MAX_STRLEN    = 0xFF;     //при некоторых проверках стринга на длинну
 

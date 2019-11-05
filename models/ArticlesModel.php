@@ -77,9 +77,9 @@ class ArticlesModel implements \core\iModel
 
             logout("запишем url: $url");
 
-            $title      = sql()->escape($arrTitles[0]->plaintext);
-            $mainText   = sql()->escape($arrBlobs[0]->innertext);
-            $previewText   = sql()->escape(mb_substr($arrBlobs[0]->plaintext,0,200));
+            $title      = sql()->escape_string($arrTitles[0]->plaintext);
+            $mainText   = sql()->escape_string($arrBlobs[0]->innertext);
+            $previewText   = sql()->escape_string(mb_substr($arrBlobs[0]->plaintext,0,200));
 
             $q = "insert into Articles (title,url,mainText,previewText) values ('$title','$shortUrl','$mainText','$previewText')";
             sql()->insert($q);

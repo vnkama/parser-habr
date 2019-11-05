@@ -1,37 +1,22 @@
 <?php 
 namespace core;
 
-//if (!defined('ROUTER_PHP'))	{die("Directly run of this file: {".__FILE__."} is rejected");}
-
 use \Error;
 
-const MYSQL_MAX_STRLEN                    = 8000;   //макс длинна стрнга в cSql
 
 
 
 
 /**
- * Class cSql
+ * Class Mysql
  *
- * класс - проклдка для доступа к mysql
+ * класс - прокладка для доступа к mysql
+ *
  *
  */
 class Mysql
 { 
 	private $dblink;
-
-    /**
-     * простейшая проверка строки запроса перед вызовом функций mysqli
-     * @param $str
-     */
-    function testString($str)
-    {
-        if (!is_string($str)) throw new Error();
-
-        $len=strlen($str);
-        if ($len < 2 || $len > MYSQL_MAX_STRLEN) throw new Error();
-        return 1;
-    }
 
     public function __construct($config)
     {
@@ -62,8 +47,6 @@ class Mysql
      */
     public function insert($q)
     {
-        //$this->testString($q);
-
         if (!mysqli_query($this->dblink, $q)) throw new Error($q);
     }
 
@@ -78,7 +61,6 @@ class Mysql
      */
     public function selectValue($q)
     {
-        $this->testString($q);
 
         $mysql_result=mysqli_query($this->dblink, $q);
 
@@ -94,22 +76,21 @@ class Mysql
     }
 
     /**
-     * @param $q
+     * @param $q -строка запроса
      * @return array|null
      *
-     * возвращает только одну страку результата !!!
-     * если несколько то это ошибка
+     * возвращает только одну строку результата !!!
+     * если несколько строк то это ошибка
      * если ответа нет - это ошибка
-     * !! осовбождается результат
+     * возвращает ОДНОМЕРНЫЙ ассоциативный масиив если ответ есть
+     * формат массива $arrRows['fieldName']
      *
      */
     public function selectRecord($q)
     {
-        $this->testString($q);
-
         $mysql_result=mysqli_query($this->dblink, $q);
         if (!$mysql_result)  throw new Error($q);
-        $arrRes=null;
+        $arrRes=[];
 
         if (mysqli_num_rows($mysql_result) == 1) {
             $arrRow = mysqli_fetch_assoc($mysql_result);	//$arrRow 1-мерный массив
@@ -129,19 +110,16 @@ class Mysql
     /**
      * отрабатыват запрос select
      *
-     * @param $q
+     * @param $q -строка запроса
      *
      * @return array
-     * возвращает null если запрос пустой
+     * возвращает [] если запрос пустой
      * возвращает двумерный ассоциативный масиив если ответ есть
-     *
+     * формат массива $arrRows[номер row 0-based]['fieldName']
      *
      */
     public function select($q)
     {
-        //если ответ пустой,	то вернет  arrResult = null
-
-        $this->testString($q);
 
         $mysql_result=mysqli_query($this->dblink, $q);
         if  (!$mysql_result) throw new Error($q);
@@ -153,17 +131,14 @@ class Mysql
 
         mysqli_free_result($mysql_result);
 
-        return $arrRows;	//если ответ пустой то вернет null
+        return $arrRows;
     }
 
     /**
      * просто вызов  mysqli_real_escape_string
      */
-    public function escape($str)
+    public function escape_string($str)
     {
         return mysqli_real_escape_string($this->dblink,$str);
     }
-
-
-
 }

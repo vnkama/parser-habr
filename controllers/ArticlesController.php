@@ -3,9 +3,11 @@
 namespace controllers;
 
 
-class ArticlesController extends \core\Controller
+class ArticlesController extends Controller
 {
-
+    /**
+     * обработчик GET запросов, выхывается из роутера
+     */
     public function routeGET()
     {
         $tabNumber = 1;    //начнем с первой страницы
@@ -22,15 +24,18 @@ class ArticlesController extends \core\Controller
             'createHtml_TotalPage',
             ['tabNumber' => $tabNumber]);
 
+        //вернем поученный хтмл в браузер
         echo $html;
     }
 
+
+    /**
+     * обработчик POST запросов, выхывается из роутера
+     */
     public function routePOST()
     {
-        //получим данные из маиисва POST
+        //получим данные из маccива POST
         $this->getDataFromPostRequest();
-
-
 
         switch ($this->getPostOperation()) {
             case 'getTab':

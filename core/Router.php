@@ -94,16 +94,21 @@ class Router
                     break;
                 }
             }
-            if (!$finded) throw new Error();
+            if (!$finded) {
+                //такой путь не обнаружен
+                header("HTTP/1.0 404 Not Found");	// вернем 404 браузеру
 
+                $controllerClass = '\\controllers\\Controller';
+                $controller = new $controllerClass();
+                $controller->route404();
 
-            $controllerClass = '\\controllers\\' . $arrRoute['Controller'];
-            $controller = new $controllerClass();
-
-            $funcName = $arrRoute['func'];
-
-            $controller->$funcName();
-
+            }
+            else {
+                $controllerClass = '\\controllers\\' . $arrRoute['Controller'];
+                $controller = new $controllerClass();
+                $funcName = $arrRoute['func'];
+                $controller->$funcName();
+            }
     }
 
 

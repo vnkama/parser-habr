@@ -4,9 +4,13 @@
 namespace Core;
 
 
+/**
+ * инфтерфейс модели
+ *
+ * @package Core
+ */
 interface iModel
 {
-    //public function __construct($params=null);
 
     /**
      * полностью возвращает все данные которые есть

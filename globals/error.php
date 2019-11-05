@@ -1,35 +1,62 @@
 <?php
-    function err_initError()
-    {
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+/*
+ *  в файле функции обоработки фатальных ошибок
+ *
+ *
+ */
 
-        set_error_handler('error_phpErrorHandler');
-        set_exception_handler('error_phpExceptionHandler');
 
-        //setFatalOutType(FATAL_OUT_ECHO);
-    }
 
-    //
-    // вызывается автоматически при внутренних ошибках PHP
-    //
-    function error_phpErrorHandler($errno, $errMsg, $errfile, $errline)
-    {
-        err_catchFatalError('phpErrorHandler',$errfile, $errline, $errMsg);        //обязательно вызовет die
+/**
+ * настройка обработки ошибок
+ */
+function err_initError()
+{
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-        //этот код не выполнисятникогда
+    set_error_handler('error_phpErrorHandler');
+    set_exception_handler('error_phpExceptionHandler');
 
-    }
+}
 
-    //
-    // вызывается автоматически при внутренних ошибках PHP
-    //
-    function error_phpExceptionHandler($ex)
-    {
-        err_catchFatalError('phpExceptionHandler',$ex->getFile(), $ex->getLine(), $ex->getMessage());        //обязательно вызовет die
 
-        //этот код не выполнисятникогда
-    }
+
+/**
+ * функйцтя вызывается автоматчикичсе вызывается автоматически при внутренних ошибках PHP
+ * используется в set_error_handler
+ *
+ * @param $errno
+ * @param $errMsg
+ * @param $errfile
+ * @param $errline
+ */
+function error_phpErrorHandler($errno, $errMsg, $errfile, $errline)
+{
+    //обработает ошибку и вызовет die
+    err_catchFatalError('phpErrorHandler',$errfile, $errline, $errMsg);
+
+    //этот код не выполнися никогда
+    // die();
+
+}
+
+
+
+/**
+ * указывается как обработчик в set_exception_handler
+ *
+ * @param $ex
+ */
+function error_phpExceptionHandler($ex)
+{
+    //обработает ошибку и вызовет die
+    err_catchFatalError('phpExceptionHandler',$ex->getFile(), $ex->getLine(), $ex->getMessage());        //обязательно вызовет die
+
+    //этот код не выполнисятникогда
+}
+
+
 
 /**
  * унифицированный обработчикк фатальных-неустранимых ошибок, вызывается из:
@@ -37,12 +64,10 @@
  * 1. из catch в main()
  * 2. из phpErrorHandler()
  * 3. phpExceptionHandler
- * 4/ напрямую вызывать функцию нельзя !!!! вызывайтие throw new Error.
+ * 4. напрямую вызывать функцию нельзя !!!! вызывайтие throw new Error().
  *
- * @param $handlerName
- * @param $file
- * @param $line
- * @param $errMsg
+ * завершается вызовом die()
+ *
  */
     function err_catchFatalError($handlerName,$file,$line,$errMsg)
     {
@@ -72,7 +97,9 @@
 
 
     /**
-     * готвит текст сообщения
+     * готвит текст сообщения об ошибке
+     *
+     * $lineEnd - конец строки, например '<br>' или '\r\n'
      */
     function error_prepareErrorMessage($handlerName,$file,$line,$errMsg,$lineEnd)
     {
@@ -84,5 +111,3 @@
 
         return $msg;
     }
-
-

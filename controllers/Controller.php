@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace controllers;
 
 use \Error;
 
@@ -43,7 +43,10 @@ class Controller
 
 
     /**
+     * декодируем забираем данные полученые от браузера в  $_POST
      *
+     *
+     * результат в массив $this->arrPostRequest
      */
     protected function getDataFromPostRequest()
     {
@@ -54,6 +57,8 @@ class Controller
     }
 
     /**
+     * отправляем ответ на пост запрос
+     * данные должны быть готовы в $this->arrPostAnswer
      *
      */
     protected function sendPostAnswer($errorMessage = 'OK')
@@ -79,6 +84,18 @@ class Controller
         return $this->arrPostRequest['operation'];
     }
 
+
+    /**
+     * применеяется при обратке пост запроса
+     * проверяет наличие парметра и возвращает его
+     * даннее запроса берем из $this->arrPostRequest
+     * тип данных - int
+     * проверяет наличие парметра и возвращает его
+     *
+     * @param $paramName -
+     *
+     * @return int
+     */
     protected function getPostInt($paramName)
     {
         //проверка на корректность
@@ -104,6 +121,14 @@ class Controller
         return (string)$this->arrPostRequest[$paramName];
     }
 
-
-
+    /**
+     * обрабочтк вызвается роутером при ошибке 404
+     * просто выводит хтмл
+     */
+    public function route404()
+    {
+        $toView['title']       = 'Комментарии';
+        $toView['body_html']   = '404.html';
+        include '../views/template.html';
+    }
 }

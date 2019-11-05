@@ -1,15 +1,6 @@
 @charset "UTF-8";
-/*@import "reset2.scss";*/
-/*@import "fonts.scss";*/
 /*стили для всего сайта, не связанны с конкретной страницей
 	применять с Bootstrap
-*/
-/*
-$bodyBackground: #f0f2f7;
-$backgroundBlueHover: #f5f7fa;
-$controlBorder: 1px solid #a9a9a9;
-
-$graySupelight:	#ededed;	//серая граница между белым и белым, еле заметна
 */
 .site-full-width {
   width: 100%;
@@ -29,6 +20,50 @@ $graySupelight:	#ededed;	//серая граница между белым и б
 }
 
 /*====================================================================*/
+/*основная старница сайта*/
+.page01 {
+  /*    .comment {
+          padding: 16px 0 30px 0;
+          border-bottom: 1px solid $borderlight;
+
+          .header-user {
+              font-size: 0.9rem;
+              !*font-weight: bold;*!
+          }
+
+          .name {
+              font-weight: bold;
+          }
+
+          .edited {
+              font-style: italic;
+          }
+
+          .header-admin {
+              !*@extend .text-md-right;*!
+          }
+
+          .row-text {
+              padding: 15px 0 15px 0;
+          }
+
+
+
+          .header-user p {
+              margin-bottom: 0;
+          }
+
+          .admin-footer-row {
+              padding-top: 10px;
+          }
+
+      }
+
+      .add-comment {
+          padding: 16px 0 30px 0;
+
+      }*/
+}
 .page01 .row-select-theme {
   padding-top: 1rem;
   border-bottom: 1px solid #b6c6d2;
@@ -37,55 +72,44 @@ $graySupelight:	#ededed;	//серая граница между белым и б
   padding-top: 1rem;
   border-bottom: 1px solid #b6c6d2;
 }
-.page01 .comment {
-  padding: 16px 0 30px 0;
-  border-bottom: 1px solid #b6c6d2;
+
+/*для модального окна*/
+#id-modal-article {
+  width: 100%;
+  min-height: 100vh;
 }
-.page01 .comment .header-user {
-  font-size: 0.9rem;
-  /*font-weight: bold;*/
+#id-modal-article .column {
+  max-width: 780px;
 }
-.page01 .comment .name {
-  font-weight: bold;
-}
-.page01 .comment .edited {
-  font-style: italic;
-}
-.page01 .comment .header-admin {
-  /*@extend .text-md-right;*/
-}
-.page01 .comment .row-text {
-  padding: 15px 0 15px 0;
-}
-.page01 .comment .header-user p {
-  margin-bottom: 0;
-}
-.page01 .comment .admin-footer-row {
-  padding-top: 10px;
-}
-.page01 .add-comment {
-  padding: 16px 0 30px 0;
-  /*
-  border-bottom: 1px solid $borderlight;
-  margin-bottom: 10px;
-  */
-}
-.page01 .post__text-html blockquote {
+#id-modal-article blockquote {
   display: block;
   margin: 12px 0;
   padding: 18px 20px;
   background: #fff7d7;
 }
-
-.header {
-  padding: 15px 0 15px 0;
-  border-bottom: 1px solid #b6c6d2;
-  margin-bottom: 0;
+#id-modal-article img {
+  margin: 0;
+  vertical-align: middle;
+  max-width: 100%;
+  height: auto;
 }
-
-#id-modal-article {
-  width: 100%;
-  min-height: 100vh;
+#id-modal-article pre {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  word-break: break-all;
+  font-family: monospace, monospace;
+  font-size: 1em;
+  white-space: pre;
+}
+#id-modal-article code {
+  white-space: pre-wrap;
+  display: block;
+  padding: 17px 20px 20px;
+  border: 1px solid #e5e8ec;
+  background: #fbfdff;
 }
 
 /*страница ошибка 404*/

@@ -23,7 +23,7 @@ function idButtonDownload_onclick()
     let arrPostRequest = {
         operation:      'startParsing',
         startingUrl:    document.getElementById('id-select-chapter').value
-    }
+    };
 
     _sendPostRequest('index',arrPostRequest,postRequest_startParsing_OK);
 
@@ -35,12 +35,12 @@ function postRequest_startParsing_OK()
 {
     //парсинг прошел успешно подкачнем, 1ю вкладку
 
-    alert('postRequest_startParsing_OK');
+    alert('Парсинг завершен');
 
     let arrPostRequest = {
         operation:  'getTab',
         tabNumber:  1
-    }
+    };
 
     _sendPostRequest('index',arrPostRequest,postRequest_getTab_OK);
 
@@ -62,7 +62,7 @@ function pagination_onclick()
     let arrPostRequest = {
         operation:  'getTab',
         tabNumber:  this.getAttribute('data-newtab')
-    }
+    };
 
     _sendPostRequest('index',arrPostRequest,postRequest_getTab_OK);
 }
@@ -82,7 +82,7 @@ function buttonSeeFull_onclick()
     let arrPostRequest = {
         operation:  'getArticle',
         idArticle:  this.getAttribute('data-id-article')
-    }
+    };
 
     _sendPostRequest('index',arrPostRequest,postRequest_getSeeFull_OK);
 }
@@ -92,7 +92,11 @@ function buttonSeeFull_onclick()
 function postRequest_getSeeFull_OK(arrPostAnswer)
 {
 
-    document.getElementById('id-modal-article').innerHTML = '<h2>' + arrPostAnswer['Article']['title'] + '</h2><br>' + arrPostAnswer['Article']['mainText'];
+    document.getElementById('id-modal-article').innerHTML =
+        "<div class='container column'>"
+        + '<h2>' + arrPostAnswer['Article']['title'] + '</h2><br>'
+        + arrPostAnswer['Article']['mainText']
+        + '</div>';
 
     $.fancybox.open({
         src  : '#id-modal-article',
