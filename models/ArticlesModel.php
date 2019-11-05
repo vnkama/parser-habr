@@ -19,12 +19,18 @@ class ArticlesModel implements \core\iModel
 
 
         $offset = ($params['tabNumber']-1) * 5;    //tabNumber 1-based
-        $q = "select idArticle,title,url,previewText from Articles where 1 order by created,idArticle limit 5 offset $offset";
+        $q = "select idArticle,title,url,previewText from Articles where 1 order by created desc,idArticle desc limit 5 offset $offset";
         $arrRes['Articles'] =  sql()->select($q);
 
         return $arrRes;
     }
 
+    /**
+     * выдет полный текст статьи
+     *
+     * @param $params   params['idArticle'] - id статьи
+     * @return mixed
+     */
     public function getArticle($params)
     {
         $arrRes['Article'] =  sql()->selectRecord("select title,mainText from Articles where idArticle=${params['idArticle']}");
@@ -33,27 +39,28 @@ class ArticlesModel implements \core\iModel
     }
 
 
-
-
+    /**
+     * парсит
+     *
+     * @param $params
+     */
     public function parsing($params)
     {
         $url = 'https://habr.com'.$params['startingUrl'];
-        logout("ыы parsingDOM url: $url");
 
+        //скачиваем страницу
         $html =  str_get_html($this->curl_getPage($url));
 
-
-        //все ссылки на страницы. обычо ссылок около 10-20. но нам буудт нужны первые 5, которых еще нет
+        //выбираем все ссылки на страницы. обычо ссылок около 10-20. но нам буудт нужны первые 5
         $arrPages = $html->find('a.post__title_link');
 
 
         $parsedPages = 0;
 
-        // цикл
+        // цикл по всем ссылкам на новые статьи
         foreach ($arrPages as $arrPage) {
 
             $url = $arrPage->href;
-            logout("проверка страницы url: $url, parsedPages $parsedPages");
 
             if (substr($url,0,16) !== 'https://habr.com') continue;
             $shortUrl = substr($url,16); //уберем домен из адреса, тк в БД храним без домена
@@ -75,7 +82,6 @@ class ArticlesModel implements \core\iModel
             //классы post__title-text и post__text-html должны быть уникальны на старнице
             if (count($arrBlobs) !== 1 || count($arrTitles) !== 1 ) continue;
 
-            logout("запишем url: $url");
 
             $title      = sql()->escape_string($arrTitles[0]->plaintext);
             $mainText   = sql()->escape_string($arrBlobs[0]->innertext);
@@ -83,16 +89,16 @@ class ArticlesModel implements \core\iModel
 
             $q = "insert into Articles (title,url,mainText,previewText) values ('$title','$shortUrl','$mainText','$previewText')";
             sql()->insert($q);
-            logout("sql insert ok");
 
-            //если уже 5 тарниц спарсили то завершаем цикл
+            //если уже 5 старниц спарсили то завершаем цикл
             if (++$parsedPages >= 3) break;
-            logout("parsedPages $parsedPages");
         }
     }
 
     /**
-     * @param $url
+     * скаивает сатью из инета
+     *
+     * @param $url - адрес статьи для заказчки
      *
      * @return bool|string
      */
